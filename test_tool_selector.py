@@ -39,15 +39,15 @@ If no tool is needed:
     ]
 )
 
-answer = response["message"]["content"]
+answer = response["message"]["content"] # gets the content of the answer llama givs
 
 print(answer)
 
-tool_call = json.loads(answer)
+tool_call = json.loads(answer) # converts  the answer into a dictionary
 
 print(tool_call)
 
-tool_name = tool_call["tool"]
+tool_name = tool_call["tool"] #gets the tool name 
 
 print(tool_name)
 
@@ -85,7 +85,7 @@ Original Question:
 What time is it?
 
 Tool Result:
-{result}
+{result}  
 """
         }
     ]

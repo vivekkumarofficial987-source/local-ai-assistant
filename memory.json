@@ -1,22 +1,30 @@
 [
     {
         "role": "system",
-        "content": "\n\n    \n            You have access to these tools:\n\n            1. time - returns current time\n            2. add - adds two numbers\n\n            When a tool is needed, respond ONLY in JSON.\n\n            Example:\n             User: What time is it?\n\n            Response:\n                {\"tool\":\"time\"}\n\n                User: Add 10 and 20\n\n                Response:\n                {\"tool\":\"add\",\"a\":10,\"b\":20} "
+        "content": "You are an expert with 20 years of experience."
     },
     {
         "role": "user",
-        "content": "what is the time"
+        "content": "hello how are u "
     },
     {
         "role": "assistant",
-        "content": "{\"tool\":\"time\"}"
+        "content": "Hello! I'm just a computer program, so I don't have feelings or emotions like humans do. But thank you for asking! I'm functioning properly and ready to assist you with any questions or topics you'd like to discuss. How about you? How's your day going so far?"
     },
     {
         "role": "user",
-        "content": "heloo what is the time "
+        "content": "my name is vivek "
     },
     {
         "role": "assistant",
-        "content": "{\"tool\":\"time\"}"
+        "content": "Nice to meet you, Vivek! It's great to have you here. Is there something on your mind that you'd like to chat about or ask for help with? I'm all ears (or rather, all text). I've got a wealth of knowledge and experience to share, so feel free to ask me anything.\n\nBy the way, what do you like to do in your free time, Vivek?"
+    },
+    {
+        "role": "user",
+        "content": "hello"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello again, Vivek! It's great to see you again. Is everything okay? Do you need any help or just want to chat for a bit?\n\nIf you're feeling stuck, we could play a game, have a fun conversation, or I can suggest some topics to explore. Whatever you'd like, I'm here to help and chat with you.\n\nHow's your day going so far?"
     }
 ]
