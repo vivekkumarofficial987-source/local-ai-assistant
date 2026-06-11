@@ -1,11 +1,12 @@
 
 import json
-from tools import get_time
+from tools import get_time, add
+
 
 from ollama import chat
 
 try :
-    with open("memeory.json","r") as file :
+    with open("memory.json","r") as file :
         messages =json.load(file)
 except:
 
@@ -17,6 +18,11 @@ except:
     }
      
 ]
+TOOLS = {
+    "time": get_time,
+    "add": add
+}
+
  
  
 while True:
@@ -41,12 +47,17 @@ while True:
         a = int(numbers[1])
         b = int(numbers[2])
 
-        print("AI:", a + b)
+        result = TOOLS["add"](a, b)
+
+        print("AI:", result)
         continue
 
     
-    if user_input.lower() == "time":
-        print("AI:", get_time())
+    command = user_input.lower()
+
+    if command in TOOLS:
+        result = TOOLS[command]()
+        print("AI:", result)
         continue
 
 
