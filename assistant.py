@@ -1,14 +1,17 @@
 import json
 
 from ollama import chat
-from tools import get_time, add, system_info
+from tools import get_time, add, system_info,save_profile,get_profile
+
 
 
 # Tool Registry
 TOOLS = {
     "time": get_time,
     "add": add,
-    "system_info": system_info
+    "system_info": system_info,
+    "save_profile": save_profile,
+    "get_profile": get_profile
 }
 
 # Load Memory
@@ -56,6 +59,19 @@ system_info -> use for:
 - how much RAM am I using
 - how much memory is used
 
+
+save_profile -> use when user says:
+
+- my name is ...
+- remember that ...
+- save this ...
+
+get_profile -> use when user asks:
+
+- what is my name
+- what do you know about me
+- what is my favorite language
+
 IMPORTANT:
 Return ONLY valid JSON.
 
@@ -80,6 +96,11 @@ Response:
 User: What's my CPU usage?
 Response:
 {"tool":"system_info"}
+
+User: My name is Vivek
+
+Response:
+{"tool":"save_profile","key":"name","value":"Vivek"}
 
 User: Hello
 Response:
