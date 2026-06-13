@@ -95,7 +95,54 @@ Response:
 
     return response["message"]["content"]
 
-    
+
+def execute_tool(tool_call):
+
+    tool_name = tool_call["tool"]
+
+    if tool_name not in TOOLS:
+        return "Tool not found"
+
+    tool_function = TOOLS[tool_name]
+
+    arguments = {
+        k: v
+        for k, v in tool_call.items()
+        if k != "tool"
+    }
+
+    return tool_function(**arguments)
+
+
+def generate_tool_response(user_input, result):
+
+    response = chat(
+        model="llama3.2",
+        messages=[
+            {
+                "role": "system",
+                "content": """
+            You are an AI assistant.
+
+            A tool has already been executed.
+
+            Use the tool result to answer naturally.
+            """
+            },
+            {
+                "role": "user",
+                "content": f"""
+                User Question:
+                {user_input}
+
+                Tool Result:
+                    {result}
+                """
+            }
+        ]
+    )
+
+    return response["message"]["content"]
 
 
 # Main Loop
@@ -119,39 +166,32 @@ while True:
     # Tool Execution
     tool_name = tool_call.get("tool", "none")
 
+
     if tool_name != "none":
-        print("tool_call =", tool_call)
 
-        if tool_call["tool"] == "time":
+        result = execute_tool(tool_call)
 
-            result = TOOLS["time"]()
+        final_answer = generate_tool_response(
+            user_input,
+            result)
 
-            print("AI:", result)
-            print("Tool Selector:", tool_answer)
-            print("Parsed Tool Call:", tool_call)
-
-            continue
-
-        if tool_call["tool"] == "add":
-
-            result = TOOLS["add"](
-                tool_call["a"],
-                tool_call["b"]
-            )
-
-            print("AI:", result)
-
-            continue
+        print("AI:", final_answer)
         
-        if tool_name == "system_info":
 
-            result = TOOLS["system_info"]()
+        messages.append({
+            "role": "user",
+            "content": user_input
+                })
 
-            print(
-                    f"AI: CPU Usage: {result['cpu']}% | RAM Usage: {result['ram']}%"
-                    )
 
-            continue
+        messages.append({
+            "role": "assistant",
+            "content": final_answer})
+        
+        with open("memory.json", "w") as file:
+            json.dump(messages, file, indent=4)
+
+        continue
     # Normal Chat
     messages.append(
         {
